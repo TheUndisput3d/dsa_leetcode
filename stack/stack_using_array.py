@@ -12,6 +12,9 @@ class Stack:
         self.stack.append(i)
     
     def pop(self):
+        if not len(self.stack):
+            print("Stack is Empty. Cannot Pop")
+            return 
         return self.stack.pop()
 
     def size(self):
