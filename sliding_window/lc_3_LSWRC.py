@@ -121,9 +121,33 @@ class Solution:
         # Return the length of the longest substring without repeating characters
         return max_len
 
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        ####################################- Using Dict -##################################
+        n = len(s)
+        max_len = 0
+        i, j = 0, 0
+        my_dict = {}
+        
+        while j < n:
+            curr = s[j]
+            if curr in my_dict:
+                left = max(left, my_dict[curr]+1)
+            curr_len = j - i + 1
+            max_len = max(max_len, curr_len)
+            my_dict[curr] = j
+            j += 1
+        
+        return max_len
 
 
         
+        
+
+
+        
+
+
 
         
 
