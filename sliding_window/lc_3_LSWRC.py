@@ -25,6 +25,21 @@ class Solution:
         return ans  # Return the longest length found
     
 
+###################################################---Using Set for Brute Force Approach---##############################################
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        max_len = 0
+        for i in range(len(s)):
+            set_ = set()
+            for j in range(i, len(s)):
+                if s[j] in set_:
+                    break
+                set_.add(s[j])
+                max_len = max(max_len, j-i+1)
+        return max_len
+    
+
+########################################################---Using list as hash to store the last occurence of strings using Ascii---####################
 ## Optimal Approach
 # T.C: O(n)
 # S.C: O(1)
@@ -62,3 +77,56 @@ class Solution:
         # Return the maximum length found
         return max_len
             
+#####################################---Using dict to store the last occurences of chars---#################################
+## Optimal Approach
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        #################################### Using Dict ##################################
+        
+        # Time Complexity: O(n)
+        # - Each character is processed at most twice: once by j and maybe by i.
+        # - Dictionary lookups and updates are O(1) on average.
+
+        # Space Complexity: O(m)
+        # - m is the size of the character set used (e.g., 26 for lowercase letters, 128 for ASCII).
+        # - Dictionary stores character positions, so space grows with unique characters.
+
+        n = len(s)              # Total length of input string
+        max_len = 0             # Tracks the length of the longest valid substring
+        i, j = 0, 0             # Two pointers for sliding window: i (start), j (end)
+        my_dict = {}            # Dictionary to store the last index of each character
+
+        # Iterate through the string using j as the end of the window
+        while j < n:
+            curr = s[j]         # Current character at position j
+
+            # If current character is already seen and within current window
+            if curr in my_dict:
+                if my_dict[curr] >= i:
+                    # Move the start pointer i just past the last occurrence of current character
+                    i = my_dict[curr] + 1
+
+            # Calculate the current window length
+            curr_len = j - i + 1
+
+            # Update maximum length if this window is longer
+            max_len = max(max_len, curr_len)
+
+            # Store/update the index of the current character
+            my_dict[curr] = j
+
+            # Expand the window by moving j forward
+            j += 1
+
+        # Return the length of the longest substring without repeating characters
+        return max_len
+
+
+
+        
+
+        
+
+
+        
+
