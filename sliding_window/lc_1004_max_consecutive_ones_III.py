@@ -39,7 +39,7 @@ class Solution:
         # Return the length of the longest valid window
         return max_len
     
-## Optimal Approach-I
+## Better Approach
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
         """
@@ -66,10 +66,10 @@ class Solution:
             if not curr:
                 zeros += 1  # Count 0s that we may flip
 
-                # If number of zeros exceeds k, shrink window from the left
-                while zeros > k:
-                    if nums[i] == 0:
-                        zeros -= 1  # Adjust count when removing a zero
+            # If number of zeros exceeds k, shrink window from the left
+            while zeros > k:
+                if nums[i] == 0:
+                    zeros -= 1  # Adjust count when removing a zero
                     i += 1          # Move start of window forward
 
             # Update max_len with the current window size
@@ -78,41 +78,46 @@ class Solution:
 
         return max_len  # Final answer: longest valid window size
     
-## Optimal Approach-II
+## Optimal Approach
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
         """
-        Finds the longest contiguous subarray of 1s allowing at most 'k' flips from 0 to 1.
+        Finds the length of the longest contiguous subarray that contains only 1s,
+        allowing at most 'k' flips of 0s to 1s.
 
         Time Complexity: O(n)
-        - Each element is visited at most twice: once by r (right pointer) and once by l (left pointer).
-        - The window expands and contracts dynamically, maintaining linear performance.
+        - Each element is visited at most twice (once by j, possibly once by i).
+        - Efficient one-pass sliding window solution.
 
         Space Complexity: O(1)
-        - Only uses a few integer variables (no data structures scaling with input size).
+        - No extra data structures used beyond a few variables.
         """
 
-        l = r = 0           # l = start of window, r = end of window
-        max_len = 0         # Stores the maximum length found
-        num_zeros = 0       # Count of zeroes within the window that we've "flipped"
-        n = len(nums)       # Length of input array
+        max_len = 0          # Tracks the maximum length found so far
+        n = len(nums)        # Total length of the input array
 
-        # Slide the window using the right pointer
-        while r < n:
-            if nums[r] == 0:
-                num_zeros += 1  # Count the number of zeros as potential flips
+        i, j = 0, 0          # Two pointers defining the window: i (left), j (right)
+        zeros = 0            # Number of zeroes within the window (flipped if ≤ k)
 
-            # If the number of zeros exceeds k, shrink the window from the left
-            if num_zeros > k:
-                if nums[l] == 0:
-                    num_zeros -= 1  # Undo a flip if we shrink past a zero
-                l += 1  # Move left pointer forward
+        # Traverse the array with right pointer j
+        while j < n:
+            curr = nums[j]
 
-            # Calculate window length and update maximum if needed
-            len_ = r - l + 1
-            max_len = max(max_len, len_)
+            # If current element is 0, count it toward our flips
+            if not curr:
+                zeros += 1
 
-            # Move right pointer forward to expand the window
-            r += 1
+            # If we've exceeded the allowed flips, shrink window from the left
+            if zeros > k:
+                if nums[i] == 0:
+                    zeros -= 1  # Remove the impact of the left-most flipped zero
+                i += 1          # Move left boundary forward
 
-        return max_len  # Final result: the longest subarray that satisfies the condition
+            # If current window is valid, update maximum length
+            if zeros <= k:
+                max_len = max(max_len, j - i + 1)
+
+            j += 1  # Expand window by moving right pointer forward
+
+        # Return the length of the longest valid window
+        return max_len
