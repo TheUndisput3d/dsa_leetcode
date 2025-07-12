@@ -4,23 +4,6 @@ from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         """
-        Calculates the maximum profit from a single buy and sell operation using a brute-force approach.
-
-        Approach:
-        This solution uses a nested loop to check all possible pairs of buy and sell days.
-        For every day `i` (buying day), it checks every future day `j` (selling day),
-        calculates the profit as `prices[j] - prices[i]`, and updates the maximum profit
-        encountered so far.
-
-        This method is simple and easy to understand but not efficient for large inputs
-        because it checks all possible pairs.
-
-        Parameters:
-        prices (List[int]): List of daily stock prices.
-
-        Returns:
-        int: Maximum profit that can be achieved from a single buy-sell transaction.
-
         Time Complexity: O(n^2), where n is the number of days (length of the prices list).
                          Each day is paired with every future day, leading to a nested loop.
 
@@ -47,27 +30,6 @@ class Solution:
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         """
-        Calculates the maximum profit from a single buy and sell operation.
-
-        Approach:
-        This solution uses a one-pass greedy algorithm. It iterates through the list
-        of prices, keeping track of the minimum price seen so far (`buy_price`) and 
-        calculates the potential profit if we sold on the current day. At each step, 
-        it updates the maximum profit seen so far.
-
-        We update `buy_price` when we encounter a price lower than the current `buy_price`.
-        Otherwise, we calculate the profit for the current day and update the maximum profit 
-        if the current one is higher.
-
-        This is an optimal solution for the "Best Time to Buy and Sell Stock" problem
-        where only one transaction (buy once and sell once) is allowed.
-
-        Parameters:
-        prices (List[int]): List of daily stock prices.
-
-        Returns:
-        int: Maximum profit that can be achieved from a single buy-sell transaction.
-
         Time Complexity: O(n), where n is the number of days (length of the prices list).
                          The algorithm makes a single pass through the list.
         
@@ -97,30 +59,6 @@ class Solution:
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         """
-        Calculates the maximum profit from a single buy and sell operation.
-
-        Approach:
-        This solution uses the two-pointer (sliding window) technique to find the maximum
-        profit that can be made from one transaction (buy once and sell once). 
-        
-        - Pointer `i` is used to track the buying day (initially set to day 0).
-        - Pointer `j` is the selling day (initially set to day 1 and always ahead of `i`).
-        
-        As we iterate:
-        - If `prices[j] < prices[i]`, it means the current price is better for buying,
-          so we move the `i` pointer to `j`.
-        - Otherwise, we calculate the profit (`prices[j] - prices[i]`) and update the 
-          maximum profit if it's greater than the current max.
-
-        This approach ensures we always buy before we sell, and efficiently finds the 
-        best possible pair of days for the transaction in a single pass.
-
-        Parameters:
-        prices (List[int]): List of daily stock prices.
-
-        Returns:
-        int: Maximum profit that can be achieved from a single buy-sell transaction.
-
         Time Complexity: O(n), where n is the number of days (length of the prices list).
                          We make only one pass through the list using two pointers.
 
