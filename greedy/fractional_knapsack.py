@@ -1,3 +1,5 @@
+## T.C: O(nlogn) + O(n) ~ O(nlogn)
+## S.C: O(n)
 def fractionalKnapsack(val, weight, capacity):
   arr = [(v, w) for v, w in zip(val, weight)]
 
@@ -16,8 +18,9 @@ def fractionalKnapsack(val, weight, capacity):
 
   return ans
 
-def fractionalKnapsack(val, weight, capacity):
-  arr = [(val[i], weight[i]) for i in range(len(val))]
+## T.C: O(nlogn) + O(n) 
+## S.C: O(1)
+def fractionalKnapsack(arr, capacity):
   arr.sort(key=lambda x: x[0]/x[1], reverse=True)
   ans = 0
   notTaken = set()
