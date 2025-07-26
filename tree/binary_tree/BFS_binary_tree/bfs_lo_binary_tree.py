@@ -4,16 +4,19 @@ from ..binary_tree_implem import Node
 def bfs_traversal(node):
   queue = deque([])
   queue.append(node)
+  result = []
 
   while len(queue) != 0:
     curr = queue.popleft()
-    print(curr.data, end=" ")
+    result.append(curr.data)
 
     if curr.left is not None:
       queue.append(curr.left)
 
     if curr.right is not None:
       queue.append(curr.right)
+
+  return result
 
 if __name__ == "__main__":
   drinks = Node("drinks") 
@@ -31,7 +34,7 @@ if __name__ == "__main__":
   cold.right = fanta
   drinks.right = cold
 
-  bfs_traversal(drinks)
+  print(bfs_traversal(drinks))
 
     
 
